@@ -1,0 +1,21 @@
+body {
+    background-color: #023047;
+}
+
+.small_container {
+    width: 30rem;
+}
+
+.post_section {
+    aspect-ratio: 1;
+}
+
+.author_photo {
+    height: 50px;
+    aspect-ratio: 1;
+}
+
+.post_image {
+    max-width: 100%;
+    aspect-ratio: 2/1;
+}
