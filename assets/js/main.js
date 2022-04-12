@@ -96,6 +96,7 @@ e incrementiamo il counter dei likes relativo.
 Salviamo in un secondo array gli id dei post ai quali abbiamo messo il like. */
 
 const likes_btn = document.querySelectorAll(".like_btn");
+let liked_posts = [];
 
 /* console.log(likes);
 console.log(likes.length);
@@ -130,5 +131,54 @@ function handleLike(event) {
     // Stampare a schermo il nuovo numero di likes
     //console.log(event.path[2].lastElementChild);
     event.path[2].lastElementChild.innerHTML = `Piace a ${posts[post_id - 1].likes} persone`;
+
+    // Salvare nell'apposito array l'id del post piaciuto
+    liked_posts.push(post_id);
+    liked_posts.sort();
+    console.log(liked_posts);
+
+    /* BONUS 3
+    Al click su un pulsante "Mi Piace" di un post, se abbiamo già cliccato 
+    dobbiamo decrementare il contatore e cambiare il colore del bottone. */
+
+    // Rimuovere l'eventListener per gestire il like
+    event.path[0].removeEventListener("click", handleLike);
+
+    // Aggiungere l'eventListener per gestire il dislike
+    event.path[0].addEventListener("click", handleDislike);
+
+}
+
+function handleDislike(event) {
+
+    /* Al click il like_btn ritorna del colore originale, 
+    andando ad rimuovere l'apposita classe al nodo della DOM relativo a like_btn
+    (ossia il secondo elemento del path relativo all'elemento dell'event) */
+    event.path[1].classList.remove("text-primary");
+
+    // Recuperare l'id della post_section in cui è contenuto il like premuto
+    /* console.log(event.path);
+    console.log(parseInt(event.path[4].id)); */
+
+    const post_id = parseInt(event.path[4].id);
+
+    // Ridurre il numero di likes
+    posts[post_id - 1].likes--;
+    //console.log(posts[post_id - 1].likes);
+
+    // Stampare a schermo il nuovo numero di likes
+    //console.log(event.path[2].lastElementChild);
+    event.path[2].lastElementChild.innerHTML = `Piace a ${posts[post_id - 1].likes} persone`;
+
+    // Rimuovere l'id del post dall'array dei post piaciuti 
+    liked_posts = liked_posts.filter(id => id !== post_id);
+    liked_posts.sort();
+    console.log(liked_posts);
+
+    // Rimuovere l'eventListener per gestire il dislike
+    event.path[0].removeEventListener("click", handleDislike);
+
+    // Aggiungere l'eventListener per gestire il like
+    event.path[0].addEventListener("click", handleLike);
 
 }
