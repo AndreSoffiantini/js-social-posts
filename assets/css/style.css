@@ -6,10 +6,6 @@ body {
     width: 30rem;
 }
 
-.post_section {
-    aspect-ratio: 1;
-}
-
 .author_photo {
     height: 3rem;
     aspect-ratio: 1;
@@ -18,4 +14,10 @@ body {
 .post_image {
     max-width: 100%;
     aspect-ratio: 2/1;
+}
+
+.like_btn {
+    max-width: 45%;
+    margin: 0 auto;
+    cursor: pointer;
 }

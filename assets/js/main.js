@@ -14,7 +14,7 @@ const posts = [{
         author_name: "Andrea Soffiantini",
         author_photo: "https://picsum.photos/536/354",
         date: "04-12-2022",
-        post_text: "",
+        post_text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi interdum odio vitae felis ultrices, tempus sagittis mi lobortis. In ac elit non enim semper auctor. Donec vel dictum metus. Duis sem erat, rutrum non diam vitae, luctus dictum mauris. Cras eget rhoncus quam. Integer sagittis ipsum sit amet faucibus ornare.",
         post_image: "https://picsum.photos/536/355",
         likes: 60
     },
@@ -23,7 +23,7 @@ const posts = [{
         author_name: "Paolo Rossi",
         author_photo: "https://picsum.photos/536/356",
         date: "04-12-2022",
-        post_text: " ",
+        post_text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi interdum odio vitae felis ultrices, tempus sagittis mi lobortis. In ac elit non enim semper auctor. Donec vel dictum metus. Duis sem erat, rutrum non diam vitae, luctus dictum mauris. Cras eget rhoncus quam. Integer sagittis ipsum sit amet faucibus ornare.",
         post_image: "https://picsum.photos/536/357",
         likes: 50
     }
@@ -78,7 +78,9 @@ function printPost(post) {
         <div class="post_footer py-2">
 
             <div class="row row-cols-2">
-                <div class="col text-center"><i class="fa-solid fa-thumbs-up mx-1"></i>Mi piace</div>
+                <div class="col text-center">
+                    <div class="like_btn"><i class="fa-solid fa-thumbs-up mx-1"></i>Mi piace</div>
+                </div>
                 <div class="col text-center">Piace a ${post.likes} persone</div>
             </div>
 
@@ -92,3 +94,41 @@ function printPost(post) {
 Se clicchiamo sul tasto "Mi Piace" cambiamo il colore al testo del bottone 
 e incrementiamo il counter dei likes relativo.
 Salviamo in un secondo array gli id dei post ai quali abbiamo messo il like. */
+
+const likes_btn = document.querySelectorAll(".like_btn");
+
+/* console.log(likes);
+console.log(likes.length);
+console.log(likes[0]);
+console.log(likes[0].closest(".post_section").id); */
+
+likes_btn.forEach(like => {
+    like.addEventListener("click", handleLike);
+});
+
+function handleLike(event) {
+
+    /* console.log(event);
+    console.log(event.path);
+    console.log(event.path[1]); */
+
+    /* Al click il like_btn cambia colore (primary di Boostrap), 
+    andando ad assegnare l'apposita classe al nodo della DOM relativo a like_btn
+    (ossia il secondo elemento del path relativo all'elemento dell'event) */
+    event.path[1].classList.add("text-primary");
+
+    // Recuperare l'id della post_section in cui è contenuto il like premuto
+    /* console.log(event.path);
+    console.log(parseInt(event.path[4].id)); */
+
+    const post_id = parseInt(event.path[4].id);
+
+    // Incrementare il numero di likes
+    posts[post_id - 1].likes++;
+    //console.log(posts[post_id - 1].likes);
+
+    // Stampare a schermo il nuovo numero di likes
+    //console.log(event.path[2].lastElementChild);
+    event.path[2].lastElementChild.innerHTML = `Piace a ${posts[post_id - 1].likes} persone`;
+
+}
